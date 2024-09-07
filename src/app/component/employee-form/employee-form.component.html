@@ -1,0 +1,163 @@
+<div class="container-fluid px-1 py-3 mx-auto">
+  <div class="row d-flex justify-content-center">
+    <div class="col-xl-7 col-lg-8 col-md-9 col-11 ">
+      <h3 class="text-uppercase fw-bold text-center ">crud opration</h3>
+      <div class="card">
+        <h5 class="text-center mb-4">ANGULAR 18 </h5>
+        <form class="form-card" [formGroup]="employeeForm">
+          <div class="row justify-content-between text-left">
+            <div class="form-group col-sm-6 flex-column d-flex">
+              <label class="form-control-label px-3"
+                >Full name<span class="text-danger"> *</span></label
+              >
+              <input
+                type="text"
+                formControlName="name"
+                placeholder="Enter your Full name"
+              />
+              <div class="text-danger text-left">
+                @if(employeeForm.controls['name'].touched){
+                  @if(employeeForm.controls['name'].errors?.['required']){
+                    <span>Name is required</span>
+                  }
+                }
+              </div>
+            </div>
+            <div class="form-group col-sm-6 flex-column d-flex">
+              <label class="form-control-label px-3"
+                >Email-Id<span class="text-danger"> *</span></label
+              >
+              <input
+                type="text"
+                formControlName="emailId"
+                placeholder="Enter your email-id"
+              />
+            </div>
+          </div>
+          <div class="row justify-content-between text-left">
+            <div class="form-group col-sm-6 flex-column d-flex">
+
+              <label class="form-control-label px-3"
+                >Contact no.<span class="text-danger"> *</span></label
+              >
+              <input
+                type="text"
+                formControlName="contactNo"
+                placeholder="Enter your phone number"
+              />
+            </div>
+            <div class="form-group col-sm-6 flex-column d-flex">
+              <label class="form-control-label px-3"
+                >City<span class="text-danger"> *</span></label
+              >
+              <input
+                type="text"
+                formControlName="city"
+                placeholder="Enter your city"
+              />
+            </div>
+          </div>
+          <div class="row justify-content-between text-left">
+            <div class="form-group col-sm-6 flex-column d-flex">
+              <label class="form-control-label px-3"
+                >State<span class="text-danger"> *</span></label
+              >
+              <input
+                type="text"
+                formControlName="state"
+                placeholder=""
+              />
+            </div>
+            <div class="form-group col-sm-6 flex-column d-flex">
+              <label class="form-control-label px-3"
+                >Pin code<span class="text-danger"> *</span></label
+              >
+              <input
+                type="text"
+                formControlName="pinCode"
+                placeholder="Enter your pincode"
+              />
+            </div>
+          </div>
+          <div class="row justify-content-between text-left">
+            <div class="form-group col-12 flex-column d-flex">
+              <label class="form-control-label px-3"
+                >Address<span class="text-danger">
+                  *</span
+                ></label
+              >
+              <textarea type="text" formControlName="address"></textarea>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-12 d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" (click)="restForm()">
+                Reset
+              </button>
+              @if (employeeForm.controls['empId'].value =='1') {
+                <button class="btn btn-primary" type="button" [disabled]="employeeForm.invalid" (click)="saveData()">Save</button>
+              }@else{
+                <button class="btn btn-warning" type="button" [disabled]="employeeForm.invalid" (click)="updateData()">update</button>
+              }
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ------------------ TABLE start-------------- -->
+
+
+<div class="container mt-2">
+  <div class="card">
+    <h2 class="text-center">EMPLOYEE LIST</h2>
+    <div class="card-body">
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">SR NO.</th>
+              <th scope="col">FULLNAME</th>
+              <th scope="col">EMAIL-ID</th>
+              <th scope="col">CONTACT NO.</th>
+              <th scope="col">CITY</th>
+              <th scope="col">STATE</th>
+              <th scope="col">PIN-CODE</th>
+              <th scope="col" >ADDRESS</th>
+              <th scope="col" >ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of EmplList; track $index) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.emailId }}</td>
+              <td>{{ item.contactNo }}</td>
+              <td>{{ item.city }}</td>
+              <td>{{ item.state }}</td>
+              <td>{{ item.pinCode }}</td>
+              <td class="address-column">{{ item.address }}</td>
+              <td class="text-center">
+                <button class="btn btn-primary" (click)="edit(item)">
+                  Edit
+                </button>
+                <button
+                  class="btn btn-danger mx-2"
+                  (click)="deleteItem(item.empId)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
